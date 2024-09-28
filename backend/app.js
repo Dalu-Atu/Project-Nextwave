@@ -17,12 +17,13 @@ const App = new express();
 App.use(express.json());
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "https://nextwave-one.vercel.app", // Fallback URL for local testing
+  origin: "*", // For testing only
   optionsSuccessStatus: 200, // For legacy browser support
 };
 
 // Use CORS middleware
 App.use(cors(corsOptions));
+App.options("*", cors(corsOptions)); // Enable pre-flight across-the-board
 // (async function () {
 //   await MoviesCollection.deleteMany();
 // })();
