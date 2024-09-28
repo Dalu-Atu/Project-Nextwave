@@ -3,9 +3,10 @@ const MoviesRoute = require("./Routes/moviesRoute");
 const AuthRoute = require("./Routes/authRoutes");
 const SubscriptionRoute = require("./Routes/subscriptionRoute");
 const CronRoute = require("./Routes/cronRoutes");
-const globalerrorHandler = require("./utils/globalerrorHandler");
 const cors = require("cors");
 const cron = require("node-cron");
+const globalErrorHandler = require("./utils/globalErrorHandler");
+
 const {
   updateActionMovies,
   updateAdventureMovies,
@@ -65,6 +66,6 @@ App.use("/api/v1/auth", AuthRoute);
 App.use("/api/v1/movies", MoviesRoute);
 App.use("/api/v1/users", MoviesRoute);
 
-App.use(globalerrorHandler);
+App.use(globalErrorHandler);
 
 module.exports = App;
