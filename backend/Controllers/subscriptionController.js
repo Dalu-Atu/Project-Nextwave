@@ -1,6 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const Subscription = require("../Models/Subscription");
-const Users = require("../Models/users");
+const Users = require("../Models/Users");
 const { catchAsync, AppError } = require("../utils/catchAsync");
 
 const createOrUpdateSubscription = catchAsync(async (req, res, next) => {

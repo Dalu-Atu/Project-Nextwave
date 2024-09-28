@@ -6,7 +6,7 @@ const {
   generateLink,
   getMoviesDownloadLink,
 } = require("../utils/getDownloadLink.js");
-const Users = require("../Models/users.js");
+const Users = require("../Models/Users.js");
 
 const getMovieInThisCategory = (movies, name, category) => {
   // Filter movies by the specified category
