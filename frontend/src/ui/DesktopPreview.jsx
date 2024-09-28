@@ -1,14 +1,6 @@
 import styled from "styled-components";
-import { CardImage } from "./MovieCard";
-import image from "../../src/assets/d.jpg";
 import MovieStats, { MovieGenres } from "./MovieStats";
-import { FaPlay } from "react-icons/fa";
-import Stream from "./Stream";
-import { useState } from "react";
-import video from "../../Abigail_480P.mp4";
-import trail from "../../video.mp4";
-import { useMovieDetails } from "../../services/movies";
-import { useParams } from "react-router-dom";
+
 import SkeletonLoader from "./SkeletonLoader";
 
 const DesktopMoviePreviewCard = styled.div`
