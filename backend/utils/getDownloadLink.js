@@ -3,7 +3,14 @@ const { MoviesCollection } = require("../Models/Movies");
 
 async function getEpisodes(url) {
   // console.log("Getting episodes", url);
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    headless: true,
+    executablePath:
+      process.env.CHROME_PATH || (await puppeteer.executablePath()),
+    defaultViewport: null,
+  });
+
   const page = await browser.newPage();
 
   // Navigate to the specified URL
@@ -71,7 +78,10 @@ async function generateLink(link) {
 
   // Launch the browser in headless mode, disabling unnecessary resources
   const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
     headless: true,
+    executablePath:
+      process.env.CHROME_PATH || (await puppeteer.executablePath()),
     defaultViewport: null,
   });
 
@@ -149,7 +159,13 @@ async function generateLink(link) {
 
 async function scrapeButtons(url, size, synopsis) {
   // Launch the browser in headless mode, disabling unnecessary resources
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    headless: true,
+    executablePath:
+      process.env.CHROME_PATH || (await puppeteer.executablePath()),
+    defaultViewport: null,
+  });
   const page = await browser.newPage();
 
   // Disable loading of images, stylesheets, and other unnecessary resources
@@ -312,8 +328,11 @@ async function addNewEpisodes(data) {
   try {
     // Launch puppeteer with request interception to block unnecessary resources
     browser = await puppeteer.launch({
-      headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      headless: true,
+      executablePath:
+        process.env.CHROME_PATH || (await puppeteer.executablePath()),
+      defaultViewport: null,
     });
     const page = await browser.newPage();
 
@@ -583,8 +602,11 @@ async function getMoviesDownloadLink(url) {
   try {
     // Launch browser with disabled resource loading for images, stylesheets, etc.
     browser = await puppeteer.launch({
-      headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      headless: true,
+      executablePath:
+        process.env.CHROME_PATH || (await puppeteer.executablePath()),
+      defaultViewport: null,
     });
 
     const page = await browser.newPage();
