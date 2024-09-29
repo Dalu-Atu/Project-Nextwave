@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
+    "postinstall": "./render-build.sh",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

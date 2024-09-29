@@ -578,6 +578,8 @@ async function checkForNewEpisodes(obj) {
 // }
 async function getMoviesDownloadLink(url) {
   const seriesPattern = /^https:\/\/nkiri\.com\/.+-tv-series\/$/;
+  console.log("downloading...");
+
   let browser;
 
   try {
@@ -585,6 +587,7 @@ async function getMoviesDownloadLink(url) {
     browser = await puppeteer.launch({
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      executablePath: "/usr/bin/chromium-browser", // Path to the installed Chromium
     });
 
     const page = await browser.newPage();
