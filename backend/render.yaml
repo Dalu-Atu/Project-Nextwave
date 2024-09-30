@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: puppeteer-app
+    env: node
+    buildCommand: ./render-build.sh
+    startCommand: node index.js
