@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Download File Example</title>
+  </head>
+  <body>
+    <h1>Download File</h1>
+    <a
+      id="download-link"
+      href="https://dweds2.downloadwella.com/d/suwwamddbwatc4c5etyrss5lso6c67wyt7u3gyywqa5shifuyg4737l64awlivcozd6uboiw/Batman.Caped.Crusader.S01E01.(NKIRI.COM).mkv"
+      download="yourfile.mkv"
+      >Download Movie</a
+    >
+
+    <script>
+      // Optionally, you can trigger the download programmatically using JavaScript.
+      const downloadLink = document.getElementById("download-link");
+
+      downloadLink.addEventListener("click", (event) => {
+        // Optional: You can log or perform actions before the download starts.
+        console.log("Downloading file...");
+      });
+    </script>
+  </body>
+</html>

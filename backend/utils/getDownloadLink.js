@@ -3,7 +3,10 @@ const { MoviesCollection } = require("../Models/Movies");
 
 async function getEpisodes(url) {
   // console.log("Getting episodes", url);
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    headless: true, // Set to false if you want to see the browser
+  });
   const page = await browser.newPage();
 
   // Navigate to the specified URL
@@ -73,6 +76,7 @@ async function generateLink(link) {
   const browser = await puppeteer.launch({
     headless: true,
     defaultViewport: null,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
   const page = await browser.newPage();
@@ -149,7 +153,11 @@ async function generateLink(link) {
 
 async function scrapeButtons(url, size, synopsis) {
   // Launch the browser in headless mode, disabling unnecessary resources
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    defaultViewport: null,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
   const page = await browser.newPage();
 
   // Disable loading of images, stylesheets, and other unnecessary resources
@@ -584,12 +592,11 @@ async function getMoviesDownloadLink(url) {
 
   try {
     // Launch browser with disabled resource loading for images, stylesheets, etc.
-    browser = await puppeteer.launch({
+    const browser = await puppeteer.launch({
       headless: true,
+      defaultViewport: null,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      executablePath: "/usr/bin/chromium-browser", // Path to the installed Chromium
     });
-
     const page = await browser.newPage();
 
     // Intercept requests to block unnecessary resources (images, stylesheets, etc.)

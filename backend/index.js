@@ -7,11 +7,17 @@ process.on("uncaughtException", (err) => {
   console.error(err.name, err.message);
   process.exit(1); // Exit the process to avoid unpredictable state
 });
+process.on("SIGTERM", () => {
+  console.log("SIGTERM signal received. Closing server.");
+  server.close(() => {
+    console.log("Server closed");
+    process.exit(0);
+  });
+});
 
 // Load environment variables
 dotenv.config({ path: "./config.env" });
 
-// Database connection function
 (async () => {
   try {
     console.log("Attempting to connect to database...");

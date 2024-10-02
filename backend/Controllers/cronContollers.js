@@ -3,6 +3,7 @@ const {
   AdventureMovies,
   AnimationMovies,
   ComedyMovies,
+  MoviesCollection,
 } = require("../Models/Movies");
 const { AppError, catchAsync } = require("../utils/catchAsync");
 const { getMovies } = require("../utils/getMovies");
@@ -65,6 +66,24 @@ exports.updateComedyMovies = catchAsync(async (req, res, next) => {
   const data = await getMovies(
     `${process.env.NKIRI}/tag/comedy/`,
     ComedyMovies
+  );
+  if (!data) return next(new AppError("Something went wrong", 404));
+  console.log({
+    status: "success",
+    count: `${data.length} Movies`,
+    movies: data,
+  });
+  return res.status(200).json({
+    status: "success",
+    count: `${data.length} Movies`,
+    movies: data,
+  });
+});
+
+exports.updateMovies = catchAsync(async (req, res, next) => {
+  const data = await getMovies(
+    `${process.env.NKIRI}/category/international/`,
+    MoviesCollection
   );
   if (!data) return next(new AppError("Something went wrong", 404));
   console.log({

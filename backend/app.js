@@ -25,9 +25,6 @@ const corsOptions = {
 // Use CORS middleware
 App.use(cors(corsOptions));
 App.options("*", cors(corsOptions)); // Enable pre-flight across-the-board
-// (async function () {
-//   await MoviesCollection.deleteMany();
-// })();
 
 //cron jobs
 const scheduleMovieUpdates = () => {

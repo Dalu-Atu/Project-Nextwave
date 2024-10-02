@@ -150,19 +150,20 @@ export function useGetMoviesSeries(type) {
 
 export function useDownloadMovie() {
   const { mutateAsync: download, isPending: isDownloading } = useMutation({
-    mutationFn: async (movieDetails) => await getDownloadLink(movieDetails),
+    mutationFn: async (movieDetails) => await getDownloadLink(movieDetails), // Ensure this returns the direct file URL
     onSuccess: (data) => {
-      toast.success("Downloading.....");
+      // Show a success message
+      toast.success("Downloading...");
 
-      // Create a link element for downloading the file
+      // Create a temporary anchor element
       const link = document.createElement("a");
       link.href = data?.link; // Use the download link from the response
-      link.setAttribute("download", ""); // Specify a filename if needed
-      link.setAttribute("target", "_blank"); // Ensure the download opens in a new tab
+      link.setAttribute("download", "yourfile.mkv"); // Specify a filename if needed
 
+      // Append the anchor to the body (not displayed)
       document.body.appendChild(link);
-      link.click(); // Simulate the click to start the download
-      document.body.removeChild(link); // Clean up the DOM after the download
+      link.click(); // Simulate a click on the link to start the download
+      document.body.removeChild(link); // Remove the link from the DOM after the download
     },
     onError: (error) => {
       const errorMessage =

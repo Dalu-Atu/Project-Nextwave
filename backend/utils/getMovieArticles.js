@@ -48,7 +48,17 @@ async function filterNewMovies(newMovies) {
 async function getMovieArticles(link) {
   console.log("Fetching movies...");
   // Launch the browser
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    headless: true,
+    defaultViewport: null,
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-gpu",
+      "--window-size=1920,1080", // Optional: adjust the window size as needed
+    ],
+  });
   const page = await browser.newPage();
 
   // Navigate to the desired webpage
