@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNewReleases } from "../../services/movies";
 import React from "react";
 import { FaStar } from "react-icons/fa";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 // Container for each video card
 const VideoCardContainer = styled.div`
@@ -58,7 +59,7 @@ const Avatar = styled.div`
   height: 36px;
   border-radius: 50%;
   margin-right: 12px;
-  background: linear-gradient(90deg, #28d5a7, #00aa6c);
+  background: var(--secondary-color);
 `;
 
 // Video Title and Channel Info
@@ -87,7 +88,7 @@ const IframeContainer = styled.div`
   padding-top: 56.25%; // 16:9 Aspect Ratio (height = width * 9 / 16)
   overflow: hidden;
   border-radius: 8px; // Optional: for rounded corners
-  background: linear-gradient(90deg, #28d5a7, #00aa6c);
+  background: var(--secondary-color);
 `;
 
 const StyledIframe = styled.iframe`
@@ -174,20 +175,16 @@ export const UpcomingMovieCard = ({ movie }) => {
 function UpcomingMovies() {
   const { isLoading, upComings } = useNewReleases();
 
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <>
       <NavContainer />
       <h4>Upcoming Movies</h4>
       <StyledUpcomings>
-        {isLoading
-          ? Array(20)
-              .fill()
-              .map((_, index) => (
-                <SkeletonLoader key={index} width="375px" height="250px" />
-              ))
-          : upComings.map((movie, i) => (
-              <UpcomingMovieCard key={i} movie={movie} />
-            ))}
+        {upComings.map((movie, i) => (
+          <UpcomingMovieCard key={i} movie={movie} />
+        ))}
       </StyledUpcomings>
     </>
   );

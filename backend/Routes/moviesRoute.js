@@ -18,7 +18,6 @@ Router.use(protect);
 Router.get("/new-releases", getNewReleases);
 Router.get("/genre/:genre", getMoviesByGenre);
 Router.get("/title/:title", getMovie);
-// Router.get("/upcoming-movies");
 Router.get("/search", getSearchedMovie);
 Router.get("/recomendations");
 Router.post("/dislike", dislikeAMovie);

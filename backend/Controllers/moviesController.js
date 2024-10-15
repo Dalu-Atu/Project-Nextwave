@@ -63,6 +63,7 @@ const getHighestRatedMovie = (movies) => {
 exports.getNewReleases = catchAsync(async (req, res, next) => {
   //get 300 movies from the db and use it to achieve all this calculations
   const lastAddedMovie = await getLastAddedMovies();
+
   const mostTrendingMovie = getHighestRatedMovie(lastAddedMovie);
   const recomendedMovies = topPicks(lastAddedMovie);
 
@@ -149,7 +150,9 @@ exports.getMovie = catchAsync(async (req, res, next) => {
   const movie = await MoviesCollection.findOne({ title });
   const similarMovies = await MoviesCollection.find({
     genreIds: { $in: [...movie.genreIds] }, // Use the $in operator to find movies that contain the genre ID
-  });
+  })
+    .sort({ createdAt: -1 })
+    .limit(30);
 
   const data = await getMovieTrailer(movie);
 
@@ -254,7 +257,12 @@ exports.removeMovieFromWatchlist = catchAsync(async (req, res, next) => {
 });
 exports.getMovieSeries = catchAsync(async (req, res, next) => {
   const category = req.params.category;
-  const movies = await MoviesCollection.find({ category }).limit(300);
+
+  // Fetch the latest 300 movies, sorted by 'createdAt' in descending order (-1)
+  const movies = await MoviesCollection.find({ category })
+    .sort({ createdAt: -1 }) // Sort by createdAt in descending order
+    .limit(300);
+
   res.status(200).json({ status: "success", movies });
 });
 

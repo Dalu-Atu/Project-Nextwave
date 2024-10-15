@@ -1,18 +1,32 @@
 import styled from "styled-components";
-import image from "../assets/duneposter.webp";
-import image1 from "../assets/home.jpg";
-import image2 from "../assets/Trigger.jpg";
-import image3 from "../assets/download.jfif";
 import { Card, CardImage, CardTitle } from "./MovieCard";
 import SkeletonLoader from "./SkeletonLoader";
 
 const StyledSimilarMovies = styled.div`
-  margin-top: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  overflow: auto;
-  /* border: 1px solid red; */
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); /* Minimum card size, max flexible */
+  gap: 19px; /* Adjust space between cards */
+  padding: 10px;
+  background-color: var(--color-bg);
+
+  overflow-y: auto;
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(150px, 1fr)
+    ); /* Minimum card size, max flexible */
+  }
+  @media (max-width: 500px) {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(100px, 1fr)
+    ); /* Minimum card size, max flexible */
+  }
 `;
 
 function SimilarMovies({ loading, movies }) {
@@ -28,7 +42,7 @@ function SimilarMovies({ loading, movies }) {
                 </Card>
               ))
           : movies?.map((movie) => (
-              <Card to={`/movie/${movie.title}`} key={movie.id}>
+              <Card to={`/movie/${movie.title}`} key={movie._id}>
                 <CardImage
                   src={`${import.meta.env.VITE_TMDB_POSTER}${movie.poster}`}
                   alt={movie.title}

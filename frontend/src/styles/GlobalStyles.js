@@ -3,9 +3,13 @@ const GlobalStyles = createGlobalStyle`
 
 :root{
   --primary-color: #e0e0e0;
-  --secondary-color: linear-gradient(90deg, #28d5a7, #00aa6c);
-  --secondary-color-light:#28d5a7;
-  --secondary-color-dark: #00aa6c;
+
+
+  --secondary-color: linear-gradient(45deg, #FF4500, #FF6347, #FFD700, #FFA500, #1E90FF, #00BFFF, #00CED1);
+  --secondary-color-reverse: linear-gradient(45deg, #00CED1, #00BFFF, #1E90FF, #FFA500, #FFD700, #FF6347, #FF4500);
+  --button-bg: linear-gradient(45deg, #ff4500, #ff6347, #ffd700, #1e90ff);
+
+  --secondary-color-dark: red;
   --border-radius-sm: 5px;
   --color-bg:#141414; 
   --color-card:#333;
@@ -58,15 +62,20 @@ const GlobalStyles = createGlobalStyle`
 }
 
 /* Default font sizes */
-html {
-  font-size: var(--font-size-base);
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 body{
   background-color: black;
   color: var(--primary-color);
-  line-height: 1.6;
+
   overflow-x: hidden;
+   padding-top: env(safe-area-inset-top);
+   
 }
 
 h1, h2, h3, h4, h5, h6 {

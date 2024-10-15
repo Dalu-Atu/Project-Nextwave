@@ -29,6 +29,7 @@ const getAllNewReleases = async () => {
   try {
     const res = await axiosInstance.get("/movies/new-releases");
 
+    // console.log(res.data.movies);
     if (res.data.status === "success") return res.data.movies;
   } catch (error) {
     const message = error.response.data.message || error.message;
@@ -36,6 +37,7 @@ const getAllNewReleases = async () => {
   }
 };
 const getGenresById = async function (genreId) {
+  if (!genreId) return;
   const res = await axiosInstance.get(`movies/genre/${genreId}`);
   console.log(res);
 
@@ -53,11 +55,11 @@ const getMovies = async (movieTitle) => {
   }
 };
 const getMoviesSeries = async (type) => {
-  console.log(type);
+  if (!type) return;
 
   try {
     const res = await axiosInstance.get(`/movies/category/${type}`);
-    console.log(res);
+    // console.log(res);
     if (res.data.status === "success") return res.data.movies;
   } catch (error) {
     const message = error.response.data.message || error.message;
@@ -66,14 +68,17 @@ const getMoviesSeries = async (type) => {
 };
 
 const getDownloadLink = async (movieDetails) => {
-  console.log(movieDetails);
   try {
     const res = await axiosInstance.post(`/movies/download/`, movieDetails);
     if (!res.data.link) throw new Error(`Could not download`); // Handle missing link
     if (res.data.status === "success") return res.data;
   } catch (error) {
-    const message = error?.response?.data?.message || error.message;
-    console.log("Error in getDownloadLink:", message);
+    const message = "Something went wrong";
+    console.log(
+      "Error in getDownloadLink:",
+      error?.response?.data?.message || error
+    );
+
     throw new Error(message); // Rethrow the error to propagate it
   }
 };
@@ -122,15 +127,16 @@ export function useNewReleases() {
 }
 
 export function useGetGenre(genreName) {
-  const genreId = getGenreId(genreName);
-  const { isLoading, data } = useQuery({
-    queryKey: [genreName],
-    queryFn: () => getGenresById(genreId),
+  const genreId = genreName ? getGenreId(genreName) : null;
+
+  const { isLoading, data, isError } = useQuery({
+    queryKey: genreName ? [genreName] : null,
+    queryFn: () => (genreId ? getGenresById(genreId) : Promise.resolve(null)), // resolve to null if genreId is invalid
+    enabled: !!genreId,
   });
 
-  return { isLoading, data };
+  return { isLoading, data, isError };
 }
-
 export function useMovieDetails(title) {
   const { isLoading, data } = useQuery({
     queryKey: ["movieDetails", title],
@@ -141,7 +147,7 @@ export function useMovieDetails(title) {
 
 export function useGetMoviesSeries(type) {
   const { isLoading, data } = useQuery({
-    queryKey: ["moviesSeries", type],
+    queryKey: ["all-movies", type],
     queryFn: async () => await getMoviesSeries(type),
   });
 
@@ -157,13 +163,24 @@ export function useDownloadMovie() {
 
       // Create a temporary anchor element
       const link = document.createElement("a");
-      link.href = data?.link; // Use the download link from the response
-      link.setAttribute("download", "yourfile.mkv"); // Specify a filename if needed
 
-      // Append the anchor to the body (not displayed)
+      // Set the URL to the download link from the response
+      link.href = data?.link;
+
+      // Set the download attribute to force download with a specific filename
+      link.setAttribute("download", "my_video.mkv");
+
+      // Set 'rel="noopener noreferrer"' for security reasons
+      link.setAttribute("rel", "noopener noreferrer");
+
+      // Append the anchor to the body (it won't be visible)
       document.body.appendChild(link);
-      link.click(); // Simulate a click on the link to start the download
-      document.body.removeChild(link); // Remove the link from the DOM after the download
+
+      // Programmatically click the anchor to start the download
+      link.click();
+
+      // Clean up by removing the link from the DOM
+      document.body.removeChild(link);
     },
     onError: (error) => {
       const errorMessage =
@@ -174,4 +191,21 @@ export function useDownloadMovie() {
   });
 
   return { download, isDownloading };
+}
+
+export function useStream() {
+  const { mutateAsync: stream, isPending: isStreaming } = useMutation({
+    mutationFn: async (movieDetails) => await getDownloadLink(movieDetails), // Ensure this returns the direct file URL
+    onSuccess: (data) => {
+      return data.link;
+    },
+    onError: (error) => {
+      const errorMessage =
+        error?.message || "An error occurred during the download.";
+      toast.error(errorMessage); // Show the error in the toast
+      console.error("Error in download:", errorMessage);
+    },
+  });
+
+  return { stream, isStreaming };
 }

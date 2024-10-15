@@ -26,7 +26,7 @@ const StyledAllSet = styled.div`
 `;
 const CheckIcon = styled(FaCheckCircle)`
   font-size: 4rem;
-  background: var(--secondary-color);
+
   border-radius: 50%;
 `;
 

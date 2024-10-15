@@ -58,6 +58,7 @@ const getMovies = async (dest, model) => {
       await model.create({
         ...mov,
         details,
+        premium: mov.ratings >= 4,
       });
     } else {
       await model.create({
@@ -69,13 +70,18 @@ const getMovies = async (dest, model) => {
 };
 
 const getLastAddedMovies = async (limit = 300) => {
-  // Find the last added movies, sorted by creation date in descending order
-  const movies = await MoviesCollection.find()
-    .sort({ createdAt: -1 })
-    .limit(limit)
-    .exec();
+  try {
+    const movies = await MoviesCollection.find()
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .lean() // Return plain JavaScript objects for better performance
+      .exec();
 
-  return movies;
+    return movies;
+  } catch (error) {
+    console.error("Error fetching last added movies:", error);
+    throw error; // Optionally re-throw the error after logging it
+  }
 };
 
 module.exports = {

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Logo from "./Logo";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   IoPersonCircleOutline,
   IoHomeOutline,
@@ -10,19 +10,28 @@ import {
   IoCalendarOutline,
   IoWalletOutline,
 } from "react-icons/io5";
-import Search from "./Search";
+import { IoIosSearch } from "react-icons/io";
 
 const StyledNavContainer = styled.div`
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 1rem; /* Default padding for non-safe area devices */
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  /* background-color: rgba(18, 18, 18, 0.8); */
-  backdrop-filter: blur(10px);
-  z-index: 99999; /* Higher z-index */
+  background-color: rgba(18, 18, 18, 0.6); /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* Glassmorphism effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari compatibility */
+  z-index: 99999;
   position: fixed;
   top: 0;
   width: 100vw;
+  height: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  /* Apply safe area padding only on devices with a notch */
+  @supports (padding: env(safe-area-inset-top)) {
+    padding-top: calc(
+      env(safe-area-inset-top) + -0.5rem
+    ); /* Add safe area for iPhones */
+  }
 
   .navigations,
   .operations {
@@ -40,28 +49,6 @@ const StyledNavContainer = styled.div`
       align-items: center;
       position: relative;
       top: -0.05rem;
-
-      input {
-        border-radius: 5px;
-        background-color: rgba(224, 224, 224, 0.2);
-        border: none;
-        height: 1.3rem;
-        padding-left: 0.3rem;
-        color: #e0e0e0;
-        transition: all 0.5s ease;
-        width: 0;
-        visibility: hidden;
-      }
-
-      &:hover input {
-        visibility: visible;
-        width: 160px;
-        margin-right: 10px;
-
-        @media (max-width: 400px) {
-          width: 120px;
-        }
-      }
 
       .operations-icon {
         margin: 0 0.5rem;
@@ -87,7 +74,9 @@ const StyledNavContainer = styled.div`
 
 const BottomNavContainer = styled.div`
   display: none;
-  z-index: 100; /* Set a higher z-index */
+
+  z-index: 1000; /* Set a higher z-index */
+  position: relative;
   @media (max-width: 874px) {
     display: flex;
     justify-content: space-around;
@@ -96,10 +85,13 @@ const BottomNavContainer = styled.div`
     bottom: 0;
     width: 100%;
     padding: 0.8rem 0;
-    background-color: rgba(18, 18, 18, 0.8);
-    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(15px);
+    background-color: rgba(18, 18, 18, 0.9);
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.9);
+    background-color: rgba(18, 18, 18, 0.6); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Glassmorphism effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari compatibility */
     border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 2rem;
   }
 `;
 
@@ -153,6 +145,7 @@ const NavItem = styled(Link)`
 `;
 
 function NavContainer() {
+  const navigate = useNavigate();
   const navList = [
     { label: "For you", dest: "/dashboard", icon: <IoHomeOutline /> },
     { label: "Movies", dest: "/movies", icon: <IoFilmOutline /> },
@@ -163,10 +156,12 @@ function NavContainer() {
   ];
 
   const location = useLocation();
+  const handleSearchClick = () => {
+    navigate("/search");
+  };
 
   return (
     <>
-      {/* Top Navigation (Logo + Search + Profile icons) */}
       <StyledNavContainer>
         <Logo>NextWave</Logo>
 
@@ -183,8 +178,8 @@ function NavContainer() {
         </NavLinksContainer>
 
         <div className="operations">
-          <div className="search-container">
-            <Search placeholder="Search..." />
+          <div className="search-container" onClick={handleSearchClick}>
+            <IoIosSearch className="operations-icon" size={"29px"} />
           </div>
           <Link to="/profile" style={{ color: "var(--primary-color)" }}>
             <IoPersonCircleOutline className="operations-icon" size={29} />
@@ -205,8 +200,6 @@ function NavContainer() {
           </BottomNavItem>
         ))}
       </BottomNavContainer>
-
-      {/* Desktop Navigation */}
     </>
   );
 }

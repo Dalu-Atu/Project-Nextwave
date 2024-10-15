@@ -12,14 +12,28 @@ const placeholderShimmer = keyframes`
 
 // Styled component for the skeleton loader
 const Skeleton = styled.div`
-  margin-top: 0.2rem;
-  margin-left: 0.2rem;
-  margin-right: 0.5rem;
-  padding-top: 40px;
+  min-width: 200px;
+  min-height: 200px;
+  width: 100%; /* Occupies full width of the grid cell */
+  aspect-ratio: 1.5 / 2; /* Keep the card aspect ratio */
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05); /* Add hover effect */
+  }
+  @media (max-width: 768px) {
+    min-width: 150px;
+  }
+  @media (max-width: 500px) {
+    min-width: 110px;
+  }
+
   border-radius: ${(props) => (props.variant === "circle" ? "50%" : "2px")};
-  border-radius: 2px;
-  display: inline-block;
-  line-height: 100%;
   min-width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height || "20px"};
   background-color: #1c1c1c; /* Slightly lighter than the background */

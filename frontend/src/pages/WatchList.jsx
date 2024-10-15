@@ -1,60 +1,72 @@
 import styled from "styled-components";
-import PreveiewMovieRecomendation, {
-  Recomendation,
-} from "../ui/PreveiewMovieRecomendation";
 import NavContainer from "../ui/NavContainer";
 import { useAuth } from "../../context/AuthContext";
-import PlayButton from "../ui/PlayButton";
-import MovieStats from "../ui/MovieStats";
-import { useState } from "react";
+import { StyledCard, CardImage, CardTitle } from "../ui/MovieCard";
 
 const StyledWatchList = styled.div`
-  width: inherit;
-  margin-top: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  padding: 0px;
-  justify-content: center;
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 19px;
+  padding: 10px;
   background-color: var(--color-bg);
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+`;
+
+// Extend the StyledCard to add a watermark for WatchList cards
+const WatchListCard = styled(StyledCard)`
+  position: relative;
+
+  &::before {
+    content: "WATCHLISED";
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: inherit;
+    letter-spacing: 1px;
+    background: var(--secondary-color);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: bolder;
+    pointer-events: none;
+    z-index: 2;
+    white-space: nowrap;
+  }
 `;
 
 function WatchList() {
   const { user } = useAuth();
   const watchListItems = user.watchlist;
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  console.log(watchListItems);
+
   return (
     <>
       <NavContainer />
       <StyledWatchList>
-        {watchListItems?.map((item, i) => (
-          <Recomendation
-            onMouseEnter={() => setHoveredIndex(i)}
-            onMouseLeave={() => setHoveredIndex(null)}
-            key={i}
-            to={`/movie/${item.title}`}
+        {watchListItems?.map((watchlisted, i) => (
+          <WatchListCard
+            to={`/movie/${watchlisted.title}`}
+            key={`media-display-${watchlisted?._id}`}
           >
-            <div className="recomendation-img">
-              <img
-                src={
-                  `${import.meta.env.VITE_TMDB_POSTER}${item?.poster}` ||
-                  item?.image
-                }
-                onError={(e) => {
-                  e.target.onerror = null; // prevents looping
-                  e.target.src = item?.image;
-                }}
-                alt={item.id}
-              />
-              {hoveredIndex === i && <PlayButton />}
-            </div>
-            <div className="recomendation-content">
-              <h3>{item.title}</h3>
-              <MovieStats />
-            </div>
-          </Recomendation>
+            <CardImage
+              src={
+                `${import.meta.env.VITE_TMDB_POSTER}${watchlisted.poster}` ||
+                watchlisted.image
+              }
+              alt={watchlisted.title}
+            />
+            <CardTitle>{watchlisted.title}</CardTitle>
+          </WatchListCard>
         ))}
       </StyledWatchList>
     </>

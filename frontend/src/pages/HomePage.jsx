@@ -98,15 +98,16 @@ const HeroSubtitleText = styled.p`
 `;
 
 const CTAButtonStyled = styled.button`
-  background: var(--secondary-color);
+  background: var(--button-bg);
   border: none;
-  padding: 1rem 2rem;
+  padding: 1rem 4rem;
   border-radius: 5px;
   font-size: 1.2rem;
   cursor: pointer;
   transition: background 0.3s, color 0.3s;
   color: var(--primary-color);
-  margin-top: 2rem;
+  margin-top: 4rem;
+  font-weight: 700;
 `;
 
 const NavigationContainer = styled.div`
@@ -116,9 +117,11 @@ const NavigationContainer = styled.div`
   justify-content: space-between;
   .login-button {
     cursor: pointer;
+    position: relative;
+    top: 0.8rem;
   }
   .login-button:hover {
-    color: --secondary-color-dark;
+    color: var(--secondary-color-dark);
     transition: all 0.3s ease;
   }
 `;
@@ -151,7 +154,7 @@ const HighlightLabel = styled.p`
   color: transparent;
   text-align: center;
   font-size: large;
-  font-weight: 700;
+  font-weight: 1000;
 `;
 
 const OffersGrid = styled.div`
@@ -209,7 +212,7 @@ const OfflineContentWrapper = styled.div`
   padding: 0 4rem;
   padding-top: 5rem;
   padding-bottom: 5rem;
-  background: var(--secondary-color);
+  background: linear-gradient(45deg, #00ced1, #00bfff, #1e90ff, #ffa500);
 
   &::before {
     content: "";
@@ -231,11 +234,10 @@ const OfflineContentWrapper = styled.div`
   }
   @media (max-width: 1226px) {
     padding: 0 1rem;
-    background: var(--secondary-color);
   }
   @media (max-width: 1130px) {
     padding: 0 0rem;
-    background: var(--secondary-color);
+
     .text-container {
       width: 100vw;
       padding: 0rem 0rem;
@@ -536,7 +538,7 @@ const Homepage = () => {
 
       <OfflineContentWrapper>
         <div className="text-container">
-          <HighlightLabel>Parental Control</HighlightLabel>
+          <HighlightLabel>PARENTAL CONTROL</HighlightLabel>
           <DescriptionSection>
             <h1>Keep your kids safe with age-appropriate content</h1>
             <p>

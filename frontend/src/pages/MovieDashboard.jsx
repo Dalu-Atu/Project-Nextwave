@@ -1,31 +1,28 @@
 import styled from "styled-components";
-import image from "../assets/Trigger.jpg";
 import NavContainer from "../ui/NavContainer";
 import Overview from "../ui/Overview";
 import { useEffect, useState } from "react";
 import DashboardContent from "../ui/DashboardContent";
-import image1 from "../assets/home.jpg";
-import image3 from "../assets/d.jpg";
-import image4 from "../assets/download.jfif";
-import { useAuth } from "../../context/AuthContext";
 import { useNewReleases } from "../../services/movies";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css"; // Import styles
+
+import "react-loading-skeleton/dist/skeleton.css";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 const HomeBg = styled.div`
+  padding: 15px;
   border: 1px solid black;
+  position: relative;
   height: fit-content;
   width: 100vw;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 30%, #141414),
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 30%, black),
     ${({ $isportrait, $image }) =>
       $isportrait
-        ? `linear-gradient(to right, #141414 50%, rgba(0, 0, 0, 0)), url(${$image}) no-repeat right center`
-        : `linear-gradient(to right, #141414 0%, rgba(0, 0, 0, 0)), url(${$image}) no-repeat right center`};
+        ? `linear-gradient(to right, black 50%, rgba(0, 0, 0, 0)), url(${$image}) no-repeat right center`
+        : `linear-gradient(to right, black 0%, rgba(0, 0, 0, 0)), url(${$image}) no-repeat right center`};
   background-size: ${({ $isportrait }) =>
     $isportrait ? "50% 100vh, contain" : "cover"};
   background-position: ${({ $isportrait }) =>
     $isportrait ? "right center" : "center center"};
-  z-index: 0;
 
   /* Media query for 710px and below */
   @media (max-width: 710px) {
@@ -48,10 +45,8 @@ const HomeBg = styled.div`
 
 function MovieDashboard() {
   const [isPortrait, setIsPortrait] = useState(false);
-  // const { user } = useAuth();
   const movies = useNewReleases();
   const { isLoading, mostTrendingMovie, recomendedMovies } = movies;
-  console.log(movies);
 
   const poster = mostTrendingMovie?.image;
   const trendingMovieImage =
@@ -66,6 +61,8 @@ function MovieDashboard() {
     };
   }, [trendingMovieImage]);
 
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <>
       <HomeBg
@@ -78,7 +75,6 @@ function MovieDashboard() {
           data={{
             mostTrendingMovie,
             recomendedMovies,
-            isLoading,
           }}
         />
       </HomeBg>

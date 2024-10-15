@@ -3,6 +3,7 @@ import axiosInstance from "../axiosConfig";
 export const signupUser = async (data) => {
   try {
     const res = await axiosInstance.post("/auth/signup", data);
+    // console.log(res);
     if (res?.data?.status === "success") return res.data;
   } catch (error) {
     throw error.response.data.message;

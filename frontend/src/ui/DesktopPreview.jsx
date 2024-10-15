@@ -112,7 +112,7 @@ const VideoFrame = styled.iframe`
 `;
 
 function DesktopPreview({ movie, loading }) {
-  console.log(movie);
+  // console.log(movie);
 
   return (
     <StyledDesktopPreview>

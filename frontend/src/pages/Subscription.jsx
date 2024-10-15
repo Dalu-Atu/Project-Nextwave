@@ -31,7 +31,6 @@ const HeroSection = styled.div`
   text-align: center;
   padding: 2rem 1rem;
   color: white;
-  background-color: var(--primary-color-dark);
   border-radius: 10px;
   width: 100%;
   margin-bottom: 2rem;
@@ -105,7 +104,7 @@ const FeatureList = styled.ul`
 `;
 
 const CTAButton = styled.button`
-  background: var(--secondary-color);
+  background: var(--button-bg);
   border: none;
   padding: 1rem 2.5rem;
   border-radius: 8px;
@@ -116,7 +115,7 @@ const CTAButton = styled.button`
   color: white;
 
   &:hover {
-    background: var(--secondary-color-light);
+    background: var(--secondary-color-dark);
     transform: translateY(-5px);
   }
 
@@ -195,12 +194,14 @@ function Subscription() {
               <SubscribedSticker>Subscribed</SubscribedSticker>
             )}
             <h2>Premium</h2>
-            <p>$15.99/month</p>
+            <p>$1.99/month</p>
             <FeatureList>
               <li>HD quality</li>
               <li>Watch on 4 screens</li>
               <li>Access to all content</li>
               <li>Exclusive releases</li>
+              <li>Get Notified on upcomings</li>
+              <li>Request a Movie</li>
             </FeatureList>
             <CTAButton onClick={() => handleSubscriptionClick("premium")}>
               Choose Premium

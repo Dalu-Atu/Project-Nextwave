@@ -1,27 +1,23 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import home from "../assets/home.jpg";
 import ActionButtons from "../ui/ActionButtons";
 import { useParams } from "react-router-dom";
-import {
-  useDownloadMovie,
-  useGetGenre,
-  useGetMoviesSeries,
-  useMovieDetails,
-} from "../../services/movies";
+import { useDownloadMovie, useMovieDetails } from "../../services/movies";
 import { RiDownload2Line } from "react-icons/ri";
 import SimilarMovies from "../ui/SimilarMovies";
 import { MovieGenres } from "../ui/MovieStats";
 import SpinnerMini from "../ui/SpinnerMini";
-import { MdTitle } from "react-icons/md";
 import NavContainer from "../ui/NavContainer";
+import LoadingSpinner from "../ui/LoadingSpinner";
+import { useAuth } from "../../context/AuthContext";
+import toast from "react-hot-toast";
+import VideoPlayer from "../ui/VideoPlayer";
 
 // Content Container for Movie Details
 const ContentContainer = styled.div`
-  position: relative;
   padding: 16px;
   background-color: black;
-  margin-top: -2rem;
+  margin-top: -1rem;
   z-index: 9999999;
 `;
 
@@ -47,7 +43,7 @@ const DownloaButton = styled.button`
   justify-content: center;
   gap: 0.5rem;
   align-items: center;
-  background: linear-gradient(90deg, #28d5a7, #00aa6c, #00613e);
+  background: var(--secondary-color-dark);
   color: white;
   padding: 12px 24px;
   border: none;
@@ -125,7 +121,7 @@ const EpisodeInfo = styled.div`
     border-radius: var(--border-radius-sm);
     margin-left: 1rem;
     font-size: small;
-    background: linear-gradient(90deg, #28d5a7, #00aa6c, #00613e);
+    background: var(--secondary-color);
     color: white;
     @media (max-width: 768px) {
       margin-left: 0;
@@ -172,7 +168,7 @@ const RelatedSection = styled.div`
 const VideoWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 50vh;
+  height: 70vh;
 
   &:before {
     content: "";
@@ -195,24 +191,28 @@ const VideoWrapper = styled.div`
   }
 `;
 
-// The iframe inside the wrapper
-const VideoFrame = styled.iframe`
-  border: none;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  z-index: 1;
-`;
+// const VideoFrame = styled.iframe`
+//   border: none;
+//   width: 100%;
+//   height: 100%;
+//   position: relative;
+//   z-index: 1;
+// `;
 
 const Quality = styled.span`
+  border: ${({ $type }) => ($type ? "none" : "1px solid #ff6347")};
   padding: 0.2rem 0.3rem;
   border-radius: var(--border-radius-sm);
   width: fit-content;
   font-size: small;
-  /* margin: 0.3rem 0.3rem 0.5rem 0.5rem; */
-  margin-left: 0.5rem;
+  background: ${({ $type }) =>
+    $type ? "var(--secondary-color-reverse)" : "none"};
+
+  margin-left: 0.6rem;
   position: relative;
   top: -0.1rem;
+  color: ${({ $type }) => ($type ? "black" : "white")};
+  font-weight: 7000;
 
   &:before {
     border-radius: var(--border-radius-sm);
@@ -242,6 +242,7 @@ const SeriesContent = ({ series }) => {
       setDownloadingEpisode(null); // Reset the downloading state after the download completes
     });
   };
+  if (downloadingEpisode) return <LoadingSpinner msg="Downloading movie..." />;
 
   return (
     <>
@@ -267,9 +268,7 @@ const SeriesContent = ({ series }) => {
                 onClick={() => handleDownload(episode)} // Call handleDownload with the current episode
                 disabled={downloadingEpisode === episode.key} // Disable button if this episode is downloading
               >
-                {downloadingEpisode === episode.key
-                  ? "Please Wait...."
-                  : "Download"}
+                Download
               </button>
             </div>
           </EpisodeInfo>
@@ -284,47 +283,56 @@ const WatchPage = () => {
   const { isLoading, data } = useMovieDetails(title);
   const movie = data?.movie;
   const { download, isDownloading } = useDownloadMovie();
-
   const movieCategory = movie?._doc?.category;
-  console.log(movieCategory);
+  const { user } = useAuth();
+  const isPremium = movie?._doc?.premium;
+  const selectedPlanByUser = user?.subscriptionDetails?.plan;
+  const subscriptionStatus = user?.subscriptionDetails?.status;
 
-  if (isLoading) return <p>Loading.....</p>;
+  const handleDownloadMovie = () => {
+    // console.log(selectedPlanByUser, subscriptionStatus);
+    if (isPremium) {
+      if (selectedPlanByUser !== "premium" || subscriptionStatus !== "active")
+        return toast.error("Available for premium users only ");
+      if (movieCategory !== "TV Series") {
+        download({
+          category: movie?._doc.category,
+          link: movie?._doc.link,
+        });
+      }
+    }
+
+    if (movieCategory !== "TV Series") {
+      download({
+        category: movie?._doc.category,
+        link: movie?._doc.link,
+      });
+    }
+  };
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <PageWrapper>
       <VideoSection>
         <VideoWrapper>
-          <VideoFrame
-            src={`https://www.youtube.com/embed/${movie?.trailer?.key}?&modestbranding=1`}
-            title={movie?.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
+          <VideoPlayer movie={movie} />
         </VideoWrapper>
         <ContentContainer>
           <MovieInfo>
             <Title>
               {movie?._doc?.title}
-
               <Quality>HD</Quality>
               <Quality>4K</Quality>
               <Quality>MKV</Quality>
+              {isPremium ? <Quality $type="premium">PREMIUM</Quality> : ""}
             </Title>
             <Subtitle>
               {/* {movie?.releaseDate} • */}
               <MovieGenres genres={movie?._doc?.genreIds} />
             </Subtitle>
           </MovieInfo>
-          <DownloaButton
-            onClick={() => {
-              if (movieCategory !== "TV Series") {
-                download({
-                  category: movie?._doc.category,
-                  link: movie?._doc.link,
-                });
-              }
-            }}
-          >
+          <DownloaButton onClick={handleDownloadMovie}>
             {isDownloading ? (
               <>
                 <SpinnerMini /> <span>pleasw wait..</span>
@@ -365,20 +373,3 @@ const WatchPage = () => {
 };
 
 export default WatchPage;
-
-// const { download, isDownloading } = useDownloadMovie(movie);
-
-// <Container
-//   onClick={() => {
-//     download();
-//   }}
-// >
-// {isDownloading ? (
-//   <SpinnerMini />
-// ) : (
-//   <>
-//     <RiDownload2Line size={"20px"} />
-//     <span style={{ fontSize: "large" }}>Download Movie</span>
-//   </>
-// )}
-// </Container>;

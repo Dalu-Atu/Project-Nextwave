@@ -64,18 +64,16 @@ const GatewayButton = styled.button`
   padding-right: 2rem;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background: ${(props) =>
-    props.selected ? "var(--secondary-color)" : "lightgray"};
-  color: ${(props) => (props.selected ? "#fff" : "#000")};
+  background: ${(props) => (props.selected ? "#ccc" : "lightgray")};
+  color: #000;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
 
   &:hover {
-    background-color: ${(props) =>
-      props.selected ? "var(--secondary-color)" : "#e0e0e0"};
+    background-color: ${(props) => (props.selected ? "#ccc" : "#e0e0e0")};
   }
 
   svg {
@@ -88,7 +86,7 @@ const SubmitButton = styled.button`
   padding: 0.75rem 1rem;
   border: none;
   border-radius: 8px;
-  background: var(--secondary-color);
+  background: var(--button-bg);
   color: white;
   font-size: 1rem;
   cursor: pointer;

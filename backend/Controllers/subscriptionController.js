@@ -51,7 +51,7 @@ const createOrUpdateSubscription = catchAsync(async (req, res, next) => {
   }
 
   // Update user record
-  console.log(subscriptionRecord);
+  // console.log(subscriptionRecord);
 
   const updatedUser = await Users.findByIdAndUpdate(
     userId,

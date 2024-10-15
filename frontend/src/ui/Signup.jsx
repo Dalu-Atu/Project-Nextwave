@@ -1,8 +1,8 @@
 // App.js
-import React from 'react';
-import styled from 'styled-components';
-import { FaCheckCircle } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { FaCheckCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -18,6 +18,7 @@ const Container = styled.div`
 const CheckIcon = styled(FaCheckCircle)`
   font-size: 4rem;
   margin-bottom: 1rem;
+  color: var(--secondary-color-dark);
 `;
 
 const Title = styled.h1`
@@ -42,7 +43,7 @@ const Benefit = styled.li`
 const BenefitIcon = styled(FaCheckCircle)`
   margin-right: 0.8rem;
   font-size: 1.2rem;
-  color: #28d5a7;
+  color: var(--secondary-color-dark);
 `;
 
 const BenefitText = styled.p`
@@ -88,7 +89,7 @@ const Signup = () => {
           <BenefitText>Download to watch offline.</BenefitText>
         </Benefit>
       </BenefitsList>
-      <NextButton onClick={() => navigate('/subscription')}>Next</NextButton>
+      <NextButton onClick={() => navigate("/subscription")}>Next</NextButton>
     </Container>
   );
 };

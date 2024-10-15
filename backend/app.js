@@ -6,6 +6,7 @@ const CronRoute = require("./Routes/cronRoutes");
 const cors = require("cors");
 const cron = require("node-cron");
 const globalErrorHandler = require("./utils/globalErrorHandler");
+const helmet = require("helmet");
 
 const {
   updateActionMovies,
@@ -26,37 +27,7 @@ const corsOptions = {
 App.use(cors(corsOptions));
 App.options("*", cors(corsOptions)); // Enable pre-flight across-the-board
 
-//cron jobs
-const scheduleMovieUpdates = () => {
-  console.log("Starting movie updates...");
-
-  // First call - updateActionMovies
-  cron.schedule("0 9,15,21 * * *", () => {
-    console.log("Running Action Movies Update...");
-    updateActionMovies();
-  });
-
-  // Second call - updateAdventureMovies (10 minutes later)
-  cron.schedule("10 9,15,21 * * *", () => {
-    console.log("Running Adventure Movies Update...");
-    updateAdventureMovies();
-  });
-
-  // Third call - updateAnimationMovies (20 minutes later)
-  cron.schedule("20 9,15,21 * * *", () => {
-    console.log("Running Animation Movies Update...");
-    updateAnimationMovies();
-  });
-
-  // Fourth call - updateComedyMovies (30 minutes later)
-  cron.schedule("30 9,15,21 * * *", () => {
-    console.log("Running Comedy Movies Update...");
-    updateComedyMovies();
-  });
-};
-
-scheduleMovieUpdates();
-
+// Add your routes
 App.use("/api/v1/cron", CronRoute);
 App.use("/api/v1/subscription", SubscriptionRoute);
 App.use("/api/v1/auth", AuthRoute);

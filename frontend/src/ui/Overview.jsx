@@ -1,18 +1,18 @@
 import { FaPlay } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
-import SkeletonLoader from "./SkeletonLoader";
 
 const StyledOverview = styled.div`
-  margin-top: 10rem;
-  margin-left: 2.5rem;
+  margin-top: 8rem;
+  margin-left: 1rem;
 
   height: max-content;
   overflow: hidden;
   padding-bottom: 1rem;
   @media (max-width: 710px) {
-    margin-left: 1rem;
+    margin-left: 0rem;
     width: calc(100vw - 1rem);
+    margin-top: 15rem;
   }
 `;
 const Watch = styled.div`
@@ -43,7 +43,7 @@ const Watch = styled.div`
 
   .play-icon {
     width: 3rem;
-    background: linear-gradient(90deg, #28d5a7, #00aa6c);
+    background: var(--secondary-color);
     height: 1.6rem;
     border-radius: 5px;
     color: #e0e0e0;
@@ -80,7 +80,7 @@ const MovieDescription = styled.p`
   z-index: 99999;
   color: #c2c2c2;
   margin-top: 1rem;
-  max-width: 60vw;
+  max-width: 80vw;
   @media (max-width: 746px) {
     max-width: 80vw;
     display: none;
@@ -162,7 +162,7 @@ const GenresContainer = styled.div`
   z-index: 99;
 `;
 const MovieGenre = styled(Link)`
-  height: 4rem;
+  height: 3rem;
   min-width: 9rem;
   text-decoration: none;
   display: flex;
@@ -172,7 +172,7 @@ const MovieGenre = styled(Link)`
   border-radius: 5px;
   color: white;
   margin: 0 1rem 0rem 0rem;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(219, 219, 219, 0.2);
   @media (max-width: 700px) {
     height: 3rem;
     min-width: 7rem;
@@ -192,7 +192,6 @@ const genres = [
   "War",
 ];
 const InfiniteCarousel = ({ suggestions }) => {
-  console.log(suggestions);
   return (
     <>
       <CarouselContainer>
@@ -202,9 +201,9 @@ const InfiniteCarousel = ({ suggestions }) => {
             <Link key={index} to={`/movie/${movie.title}`}>
               <SuggestedMovies
                 src={`${import.meta.env.VITE_TMDB_IMAGE}${
-                  movie?.backdropPoster || movie.VITE_TMDB_IMAGE
+                  movie?.backdropPoster || movie.image
                 }`}
-                alt={`Suggested Movie ${index + 1}`}
+                alt={movie.title}
               />
             </Link>
           ))}
@@ -215,8 +214,7 @@ const InfiniteCarousel = ({ suggestions }) => {
 };
 
 function Overview({ data }) {
-  // const navigate = useNavigate();
-  const { mostTrendingMovie, recomendedMovies, isLoading } = data;
+  const { mostTrendingMovie, recomendedMovies } = data;
 
   return (
     <StyledOverview>
@@ -237,22 +235,12 @@ function Overview({ data }) {
           More info
         </Link>
       </Watch>
-      {isLoading ? (
-        <SkeletonLoader width={"500px"} />
-      ) : (
-        <MovieName>{mostTrendingMovie?.title}</MovieName>
-      )}
 
-      {isLoading ? (
-        <SkeletonLoader width={"900px"} />
-      ) : (
-        <MovieDescription>{mostTrendingMovie?.synopsis} </MovieDescription>
-      )}
-      {isLoading ? (
-        <SkeletonLoader height={"200px"} />
-      ) : (
-        <InfiniteCarousel suggestions={recomendedMovies} />
-      )}
+      <MovieName>{mostTrendingMovie?.title}</MovieName>
+
+      <MovieDescription>{mostTrendingMovie?.synopsis} </MovieDescription>
+
+      <InfiniteCarousel suggestions={recomendedMovies} />
 
       <GenresContainer>
         {genres.map((genre, index) => (

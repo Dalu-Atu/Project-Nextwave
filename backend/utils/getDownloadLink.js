@@ -66,88 +66,70 @@ async function getEpisodes(url) {
 }
 
 async function generateLink(link) {
-  // console.log("Opening link:", link);
+  console.log("Opening link:", link);
 
   let videourl;
   const urlPattern =
     /^https:\/\/dweds[0-9]+\.downloadwella\.com\/d\/[a-z0-9]+\/[A-Za-z0-9\.\(\)]+\.mkv$/;
 
-  // Launch the browser in headless mode, disabling unnecessary resources
-  const browser = await puppeteer.launch({
-    headless: true,
-    defaultViewport: null,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
-
-  const page = await browser.newPage();
-
-  // Disable loading of images, stylesheets, and other unnecessary resources
-  await page.setRequestInterception(true);
-  page.on("request", (request) => {
-    if (
-      ["image", "stylesheet", "font", "script", "media"].includes(
-        request.resourceType()
-      )
-    ) {
-      request.abort(); // Prevent loading of unwanted resources
-    } else {
-      request.continue();
-    }
-  });
-
-  // Set a custom user agent to simulate a real browser
-  await page.setUserAgent(
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
-  );
-
   try {
-    await page.goto(link, { waitUntil: "domcontentloaded", timeout: 60000 });
-    // console.log("Page loaded!");
+    // Launch the browser in headless mode for faster execution
+    const browser = await puppeteer.launch({
+      headless: true, // Run in headless mode for speed
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
 
-    // Function to handle requests and look for video URLs
-    const requestListener = (request) => {
+    const page = await browser.newPage();
+
+    // Block loading of images, stylesheets, fonts, media, and scripts
+    await page.setRequestInterception(true);
+    page.on("request", (request) => {
+      const resourceType = request.resourceType();
+      if (
+        ["image", "stylesheet", "font", "media", "script"].includes(
+          resourceType
+        )
+      ) {
+        request.abort(); // Block unnecessary resources
+      } else {
+        request.continue(); // Allow only essential ones
+      }
+    });
+
+    // Navigate to the provided link
+    await page.goto(link, { waitUntil: "domcontentloaded", timeout: 30000 });
+    console.log("Page loaded!");
+
+    // Intercept requests and detect the video URL pattern
+    page.on("request", (request) => {
       if (request.method() === "GET" && urlPattern.test(request.url())) {
         videourl = request.url();
-        // console.log("Video URL detected:", videourl);
+        console.log("Video URL detected:", videourl);
       }
-    };
+    });
 
-    // Set up request interception for video URL detection
-    page.on("request", requestListener);
+    // Click the download button immediately after it appears
+    await page.waitForSelector(".downloadbtn", {
+      visible: true,
+      timeout: 10000,
+    });
+    console.log("Download button found, clicking...");
+    await page.click(".downloadbtn");
 
-    // Function to immediately click the download button once it is found
-    const clickDownloadButton = async () => {
-      // console.log("Waiting for the download button...");
+    // Short delay to ensure the video URL request is processed
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
-      // Wait for the download button to appear and click it as soon as it's found
-      await page.waitForSelector(".downloadbtn", {
-        visible: true,
-        timeout: 10000,
-      });
-      // console.log("Download button found, clicking...");
-
-      await page.click(".downloadbtn");
-
-      // Wait to ensure all requests have been processed
-      await new Promise((resolve) => setTimeout(resolve, 3000)); // Short wait after click
-    };
-
-    // Execute the click handler
-    await clickDownloadButton();
-
-    await browser.close(); // Close the browser
     if (!videourl) {
-      throw new Error("No video URL found after clicking the download button");
-      // console.log("No video URL found after clicking the download button.");
+      console.log("No video URL found after clicking the download button.");
     }
-    return { videourl };
 
-    // console.log({ videourl });
+    // Close the browser and return the result
+    await browser.close();
+    console.log({ videourl });
+    return { videourl };
   } catch (error) {
     console.error("Error occurred:", error);
-  } finally {
-    // await browser.close(); // Close the browser
-    // return { videourl }; // Return the video URL and other details
+    return { videourl: null };
   }
 }
 
@@ -591,37 +573,33 @@ async function getMoviesDownloadLink(url) {
   let browser;
 
   try {
-    // Launch browser with disabled resource loading for images, stylesheets, etc.
-    const browser = await puppeteer.launch({
-      headless: true,
-      defaultViewport: null,
+    // Launch browser in headless mode for faster execution
+    browser = await puppeteer.launch({
+      headless: true, // Headless mode for speed
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
+
     const page = await browser.newPage();
 
-    // Intercept requests to block unnecessary resources (images, stylesheets, etc.)
+    // Intercept and block unnecessary resources to improve performance
     await page.setRequestInterception(true);
     page.on("request", (request) => {
+      const resourceType = request.resourceType();
       if (
-        ["image", "stylesheet", "font", "media"].includes(
-          request.resourceType()
+        ["image", "stylesheet", "font", "media", "script"].includes(
+          resourceType
         )
       ) {
-        request.abort(); // Block unwanted resources
+        request.abort(); // Block these resource types
       } else {
-        request.continue();
+        request.continue(); // Allow others (e.g., document, xhr)
       }
     });
 
-    // Set a custom user agent to mimic a regular browser
-    await page.setUserAgent(
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
-    );
+    // Navigate to the URL, waiting only for the DOM to load
+    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
 
-    // Navigate to the page and wait until the network is mostly idle
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
-
-    // Extract the necessary data (button link and alert descriptions)
+    // Extract necessary data (button link, alert descriptions, and paragraph text)
     const data = await page.evaluate(() => {
       const buttonLinks = document.querySelector(
         ".elementor-button-link"
@@ -638,30 +616,32 @@ async function getMoviesDownloadLink(url) {
       return { buttonLinks, alertDescriptions, paragraphText };
     });
 
-    // Check if button links are found, and proceed accordingly
-    if (data && data.buttonLinks) {
-      if (seriesPattern.test(url)) {
-        return await scrapeButtons(url, "", data.paragraphText);
-      }
-
-      // Extract size from alert descriptions if available
-      const size = data.alertDescriptions?.split("is")[2] || "Unknown size";
-      const downloadLink = await generateLink(
-        data.buttonLinks,
-        size,
-        data.paragraphText
-      );
-      return { ...downloadLink, paragraphText: data.paragraphText };
-    } else {
+    // If no download link is found, return null
+    if (!data || !data.buttonLinks) {
       console.error("No download link found on the page");
       return null;
     }
+
+    // Handle series-specific scraping logic
+    if (seriesPattern.test(url)) {
+      return await scrapeButtons(url, "", data.paragraphText);
+    }
+
+    // Extract size from alert descriptions if available
+    const size = data.alertDescriptions?.split("is")[2] || "Unknown size";
+    const downloadLink = await generateLink(
+      data.buttonLinks,
+      size,
+      data.paragraphText
+    );
+
+    return { ...downloadLink, paragraphText: data.paragraphText };
   } catch (error) {
     console.error("Error retrieving download link:", error);
     return null;
   } finally {
     if (browser) {
-      await browser.close(); // Close the browser after extraction
+      await browser.close(); // Ensure the browser closes after use
     }
   }
 }

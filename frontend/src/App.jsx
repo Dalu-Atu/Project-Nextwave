@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import MovieDashboard from "./pages/MovieDashboard";
 import GlobalStyles from "./styles/GlobalStyles";
-import PreviewMovie from "./pages/PreviewMovie";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import Stream from "./ui/Stream";
@@ -21,19 +20,19 @@ import ProtectedRoute from "./ui/ProtectedRoute";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import WatchPage from "./pages/WatchPage";
+import SearchPage from "./ui/SearchPage";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 20,
-      startTime: 0,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
+      staleTime: 1000 * 60 * 7, // 1 minutes
+      cacheTime: 1000 * 60 * 60 * 24, // 1 day (data stays in cache for this long)
     },
   },
 });
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -50,6 +49,7 @@ function App() {
               path="dashboard"
               element={<ProtectedRoute element={<MovieDashboard />} />}
             />
+            <Route path="search" element={<SearchPage />} />
             <Route
               path="movies"
               element={
@@ -72,10 +72,7 @@ function App() {
               // element={<PreviewMovie />}
               element={<ProtectedRoute element={<WatchPage />} />}
             />
-            <Route
-              path="upcoming-movie/:id"
-              element={<ProtectedRoute element={<PreviewMovie />} />}
-            />
+
             <Route
               path="settings"
               element={<ProtectedRoute element={<Settings />} />}
@@ -131,7 +128,7 @@ function App() {
             fontSize: "16px",
             maxWidth: "500px",
             padding: "16px 24px",
-            background: "#28d5a7",
+            background: "var(--secondary-color-dark)",
             color: "#fff",
             zIndex: "99999999999999999999999",
           },

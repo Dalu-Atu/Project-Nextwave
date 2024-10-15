@@ -37,7 +37,9 @@ exports.signup = catchAsync(async (req, res, next) => {
     stripeCustomerId: customer.id,
   });
 
-  const newUser = await Users.findById(createdUser._id).populate("watchlist");
+  const newUser = await Users.findById(createdUser._id).populate(
+    "subscriptionDetails"
+  );
 
   createSendToken(newUser, 200, res);
 });
@@ -48,7 +50,9 @@ exports.login = catchAsync(async (req, res, next) => {
     next(new AppError("please provide correct email or password", 404));
 
   //check if the user exist
-  const user = await Users.findOne({ email: req.body.email });
+  const user = await Users.findOne({ email: req.body.email }).populate(
+    "subscriptionDetails"
+  );
   if (!user) next(new AppError("please provide correct details", 404));
 
   //check if the provided password, when hashed is thesame as the users passwod

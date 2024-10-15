@@ -1,6 +1,6 @@
-import React from 'react';
-import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-import axiosInstance from '../../axiosConfig';
+import React from "react";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import axiosInstance from "../../axiosConfig";
 
 const PaymentForm = ({ plan }) => {
   const stripe = useStripe();
@@ -10,7 +10,7 @@ const PaymentForm = ({ plan }) => {
     event.preventDefault();
 
     if (!stripe || !elements) {
-      console.error('Stripe.js has not loaded yet.');
+      console.error("Stripe.js has not loaded yet.");
       return;
     }
 
@@ -20,19 +20,19 @@ const PaymentForm = ({ plan }) => {
     const { token, error } = await stripe.createToken(cardElement);
 
     if (error) {
-      console.error('Stripe error:', error.message);
+      console.error("Stripe error:", error.message);
       return;
     }
 
     try {
-      const response = await axiosInstance.post('/stripe/subscribe', {
+      const response = await axiosInstance.post("/stripe/subscribe", {
         token: token.id,
         plan,
       });
 
-      console.log('Stripe subscription successful:', response.data);
+      // console.log('Stripe subscription successful:', response.data);
     } catch (error) {
-      console.error('Subscription error:', error);
+      console.error("Subscription error:", error);
     }
   };
 

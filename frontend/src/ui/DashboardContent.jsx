@@ -2,13 +2,12 @@ import styled from "styled-components";
 import React from "react";
 import { Card, CardImage, CardTitle } from "./MovieCard";
 import { StyledUpcomings, UpcomingMovieCard } from "../pages/UpcomingMovies";
-import { useNewReleases } from "../../services/movies";
 import SkeletonLoader from "./SkeletonLoader";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: var(--color-bg);
+  /* background-color: var(--color-bg); */
   color: #fff;
   min-height: 100vh;
 
@@ -16,8 +15,7 @@ const Container = styled.div`
 `;
 
 const Section = styled.div`
-  padding: 10px;
-  height: fit-content;
+  margin-top: 1rem;
 `;
 
 const SectionTitle = styled.h2`
@@ -29,7 +27,8 @@ const SectionTitle = styled.h2`
 const Carousel = styled.div`
   display: flex;
   overflow-x: auto;
-
+  padding: 1rem;
+  gap: 0.7rem;
   &::-webkit-scrollbar {
     display: none;
   }

@@ -39,8 +39,9 @@ export const AuthProvider = ({ children }) => {
     const { mutateAsync: signup, isPending: isSigningUp } = useMutation({
       mutationFn: (data) => signupUser(data),
       onSuccess: (userData) => {
-        localStorage.setItem("jwt", userData.data.token);
-        localStorage.setItem("user", JSON.stringify(userData));
+        // console.log(userData);
+        localStorage.setItem("jwt", userData.token);
+        localStorage.setItem("user", JSON.stringify(userData.user));
         setUser(userData);
         navigate("/welcome");
       },
@@ -55,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     const { mutateAsync: login, isPending: isLoggingIn } = useMutation({
       mutationFn: (data) => loginUser(data),
       onSuccess: (userData) => {
-        console.log(userData);
+        // console.log(userData);
         localStorage.setItem("jwt", userData.token);
         localStorage.setItem("user", JSON.stringify(userData.user));
         setUser(userData);

@@ -1,16 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaInstagram,
-  FaYoutube,
-  FaLocationArrow,
-} from "react-icons/fa";
-import Logo from "./Logo";
+import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaLocationPin } from "react-icons/fa6";
 import { IoMdMailUnread } from "react-icons/io";
-import { PiPhone } from "react-icons/pi";
+
 import { MdOutlineLocalPhone } from "react-icons/md";
 
 const FooterContainer = styled.footer`
@@ -39,6 +32,7 @@ const FooterSection = styled.div`
   margin: 2rem 0;
   min-width: 20rem;
   color: lightgray;
+  line-height: 2rem;
 
   @media (min-width: 768px) {
     margin: 2rem;
@@ -52,9 +46,11 @@ const FooterSection = styled.div`
   }
   button {
     margin-left: 1rem;
-    background: var(--secondary-color);
+    background: var(--button-bg);
     color: white;
     border: none;
+    font-weight: 700;
+    padding: 0 2rem;
   }
 `;
 
@@ -85,7 +81,7 @@ const Contact = styled.div`
   .icon {
     position: relative;
     left: -0.5rem;
-    color: #00aa6c;
+    color: var(--secondary-color-dark);
     top: 0.4rem;
   }
   .contact-text {
@@ -112,7 +108,7 @@ const Footer = () => {
             <span>
               <IoMdMailUnread className="icon" size={"20px"} />
             </span>
-            <span className="contact-text">reachus@Nextave.com</span>
+            <span className="contact-text">reachus@Nextwave.com</span>
           </Contact>
           <Contact>
             <span className="contact-text">
@@ -155,7 +151,6 @@ const Footer = () => {
             </a>
           </SocialIcons>
           <p>
-            <b>Follow Us</b> <br />
             Join us for the latest updates, special offers, and exclusive
             content.
           </p>

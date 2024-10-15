@@ -2,7 +2,8 @@ import { FaStar } from "react-icons/fa";
 import styled from "styled-components";
 import PremiumTag from "./PremiumTag";
 
-const StyledMovieStats = styled.div`
+// Adjust the Label component to use <span> instead of <span> for inline usage
+const StyledMovieStats = styled.span`
   margin-top: 0.3rem;
   display: flex;
   padding: 0.5rem;
@@ -15,33 +16,28 @@ const StyledMovieStats = styled.div`
   font-size: small;
   margin-left: 10px;
 `;
-const StyledMovieGenres = styled.div`
+
+const StyledMovieGenres = styled.span`
   display: flex;
   color: lightgray;
   font-size: small;
   font-style: italic;
-  /* margin-top: 0.3rem;
-  display: flex;
-  padding: 0.5rem;
-  justify-content: space-around;
-  width: fit-content;
-  font-weight: bold;
-  position: relative;
-  right: 1rem;
-  font-size: small;
-  margin-left: 10px; */
 `;
+
 const StarIcon = styled(FaStar)`
   color: gold;
   padding-right: 0.3rem;
   margin-right: 0rem;
 `;
-const Label = styled.div`
+
+// Update Label to use <span> for inline contexts
+const Label = styled.span`
   display: flex;
   align-items: center;
   padding: 0 0.5rem;
 `;
-const Rating = styled.div`
+
+const Rating = styled.span`
   display: flex;
   align-items: center;
 `;
@@ -53,11 +49,12 @@ function MovieStats({ stats }) {
         <StarIcon />
         <span>{stats?.ratings}</span>
       </Rating>
+      {/* Use span for the movie runtime */}
       <Label>
         <span>123</span>m
       </Label>
+      {/* Use span for the release date */}
       <Label>{stats?.releaseDate}</Label>
-
       <PremiumTag />
     </StyledMovieStats>
   );

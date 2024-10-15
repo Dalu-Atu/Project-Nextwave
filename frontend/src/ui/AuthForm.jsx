@@ -48,7 +48,7 @@ const StyledAuthForm = styled.div`
     margin-top: 2rem;
     padding: 0.75rem 2rem;
     border-radius: var(--border-radius-sm);
-    background: #00aa6c;
+    background: var(--secondary-color-dark);
     font-size: 1rem;
     color: #fff;
     border-style: none;
