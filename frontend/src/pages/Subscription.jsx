@@ -83,7 +83,6 @@ const PlanCard = styled.div`
   p {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: var(--secondary-color-dark);
   }
 
   @media (max-width: 768px) {
@@ -129,7 +128,7 @@ const SubscribedSticker = styled.div`
   border-radius: var(--border-radius-sm);
   padding: 0.7rem;
   background: rgba(0, 0, 0, 0.2);
-  color: var(--secondary-color-light);
+  color: var(--secondary-color-dark);
   font-size: large;
   transform: rotate(40deg);
   position: absolute;
