@@ -181,9 +181,6 @@ function NavContainer() {
           <div className="search-container" onClick={handleSearchClick}>
             <IoIosSearch className="operations-icon" size={"29px"} />
           </div>
-          <Link to="/profile" style={{ color: "var(--primary-color)" }}>
-            <IoPersonCircleOutline className="operations-icon" size={29} />
-          </Link>
         </div>
       </StyledNavContainer>
 
