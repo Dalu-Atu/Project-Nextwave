@@ -15,7 +15,7 @@ backend/node_modules/
 # Environment Variables
 frontend/.env
 backend/.env
-+ backend/config.env   # ✅ Add this line
++ backend/config.env  
 
 
 frontend/dist
