@@ -1,0 +1,21 @@
+{
+  "name": "NextWave",
+  "short_name": "NextWave",
+  "description": "Your ultimate streaming experience.",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#18191a",
+  "theme_color": "#18191a",
+  "icons": [
+    {
+      "src": "./src/assets/logo-thumbnail.jpg",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
+      "src": "./src/assets/app-icon.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+}
