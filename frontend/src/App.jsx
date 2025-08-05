@@ -21,6 +21,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import WatchPage from "./pages/WatchPage";
 import SearchPage from "./ui/SearchPage";
+import AcmeBeautyWebsite from "./pages/Acme";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
 
@@ -40,10 +41,10 @@ function App() {
       <BrowserRouter stripe={stripePromise}>
         <AuthProvider>
           <Routes>
+            <Route path="/acme" element={<AcmeBeautyWebsite />} />
             <Route path="/" element={<Homepage />} />
             <Route path="welcome" element={<Signup />} />
             <Route path="signup/:page" element={<Subscription />} />
-
             {/* Protected routes */}
             <Route
               path="dashboard"
@@ -66,13 +67,11 @@ function App() {
               path="movies/:genre"
               element={<ProtectedRoute element={<MediaDisplay />} />}
             />
-
             <Route
               path="movie/:title"
               // element={<PreviewMovie />}
               element={<ProtectedRoute element={<WatchPage />} />}
             />
-
             <Route
               path="settings"
               element={<ProtectedRoute element={<Settings />} />}
