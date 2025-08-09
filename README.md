@@ -1,6 +1,6 @@
 # NextWave Entertainment Platform
 
-[![Live Demo](https://img.shields.io/badge/🎬_Live_Demo-Available-brightgreen.svg)](https://your-demo-url.com)
+[![Live Demo](https://img.shields.io/badge/🎬_Live_Demo-Available-brightgreen.svg)](https://nextwave-one.vercel.app/)
 [![Platform](https://img.shields.io/badge/Platform-Web_&_Mobile-blue.svg)]()
 [![Tech Stack](https://img.shields.io/badge/Stack-MERN-orange.svg)]()
 [![License](https://img.shields.io/badge/License-Commercial-red.svg)]()
@@ -9,20 +9,20 @@
 
 NextWave is a complete movie streaming and downloading platform that revolutionizes how users discover, watch, and enjoy entertainment content. Built with cutting-edge technology and intelligent automation, NextWave delivers a seamless, ad-free streaming experience with an extensive library that updates itself automatically from the latest trends across the internet.
 
-![NextWave Demo](public/demo.gif)
+![NextWave Demo](public/nextwave-demo.gif)
 
 ---
 
 ## 🌟 **Why NextWave?**
 
-In today's entertainment landscape, users demand more than just basic streaming. They want **intelligent content discovery**, **seamless experiences**, and **value for money**. NextWave delivers all of this through innovative automation and user-centric design.
+In today's entertainment landscape, users demand more than just basic streaming. They want **intelligent content discovery**, **seamless experiences**, and **value for money**. NextWave delivers all of this through innovative automation and user-centric design inspired by Google TV
 
-### **The Problem We Solve**
+### **The Problem it Solves**
 - 🚫 **Content Fragmentation**: Users tired of jumping between multiple platforms
-- 💰 **High Costs**: Expensive subscriptions with limited value
-- 📱 **Poor Mobile Experience**: Platforms that don't work well across devices
-- 🎯 **Bad Discovery**: Difficulty finding quality content worth watching
-- 📺 **Limited Offline Access**: No way to download content for later viewing
+- 💰 **High Costs**: Nextwave is 100% free to use, no payment, no ads
+- 📱 **Poor Mobile Experience**: Nextwave works across all devices and serves as an hybrid Web app
+- 🎯 **Bad Discovery**: Nextwave provides you with interesting content as soon as they're released
+- 📺 **Limited Offline Access**: With Nextwave you can fully download and watch offline
 
 ### **Our Solution**
 ✅ **All-in-One Platform**: Complete movie and series library in one place  
@@ -43,7 +43,6 @@ In today's entertainment landscape, users demand more than just basic streaming.
 - **Quality Assurance**: Automated quality checks ensure premium viewing experience
 
 ### 👥 **Advanced User Experience**
-- **Instant Account Creation**: Automated user onboarding with unique ID generation
 - **Personalized Playlists**: Create and manage custom collections of favorite content
 - **Multi-Tier Access**: Free and premium plans with appropriate content access
 - **Dark Mode Interface**: Beautiful, responsive design optimized for any lighting condition
@@ -57,52 +56,10 @@ In today's entertainment landscape, users demand more than just basic streaming.
 
 ### 🛡️ **Enterprise-Grade Security**
 - **Secure Authentication**: Robust user verification and data protection
-- **Subscription Management**: Automated billing with Stripe integration
 - **Access Control**: Content restrictions based on user subscription tiers
 - **Privacy Protection**: User data encrypted and securely stored
 
----
-
-## 💼 **Business Use Cases**
-
-### **🏠 Personal Entertainment**
-Perfect for individuals and families seeking a comprehensive streaming solution:
-- **Movie Enthusiasts**: Access to vast library with personalized recommendations
-- **Family Entertainment**: Safe, curated content with parental controls
-- **Mobile Users**: Download content for commutes and travel
-- **Budget-Conscious Users**: Free tier with option to upgrade for premium features
-
-### **🏢 Small Business Applications**
-Ideal for entertainment businesses and content providers:
-- **Local Entertainment Centers**: Provide streaming services to customers
-- **Hotels & Hospitality**: In-room entertainment systems
-- **Cafes & Waiting Areas**: Background entertainment for customers
-- **Small Content Aggregators**: White-label solution for streaming services
-
-### **🏭 Enterprise Solutions**
-Scalable platform for large-scale implementations:
-- **Corporate Entertainment**: Employee entertainment platforms
-- **Educational Institutions**: Media libraries for educational content
-- **Healthcare Facilities**: Patient entertainment systems
-- **Large-Scale Streaming Services**: Foundation for commercial streaming platforms
-
----
-
-## 🎨 **Platform Customization**
-
-### **Complete Brand Control**
-- **Visual Identity**: Customize colors, logos, and branding elements
-- **UI Personalization**: Adapt interface to match your brand aesthetic
-- **Content Curation**: Control which content appears for different user tiers
-- **Subscription Plans**: Configure pricing and features for different market segments
-
-### **Administrative Power**
-- **User Management**: Comprehensive user analytics and engagement tracking
-- **Content Oversight**: Monitor automated content sourcing and quality
-- **Revenue Tracking**: Detailed subscription and payment analytics
-- **Support Integration**: Built-in tools for customer support and management
-
----
+--
 
 ## 📊 **How It Works**
 
@@ -113,21 +70,6 @@ Scalable platform for large-scale implementations:
 4. **Library Integration**: New content automatically categorized and added
 5. **User Notifications**: Subscribers notified of new additions matching their preferences
 
-### **👤 For User Experience**
-1. **Quick Registration**: Automated account creation with unique user ID
-2. **Plan Selection**: Choose from free, premium, or enterprise tiers
-3. **Content Discovery**: Browse curated library or use intelligent search
-4. **Streaming & Downloads**: Watch instantly or save for offline viewing
-5. **Playlist Management**: Create custom collections and receive recommendations
-
-### **💳 For Subscription Management**
-1. **Stripe Integration**: Secure payment processing and subscription handling
-2. **Automated Billing**: Recurring payments with upgrade/downgrade options
-3. **Access Control**: Content availability based on subscription tier
-4. **Usage Analytics**: Track viewing patterns and engagement metrics
-
----
-
 ## 🚀 **Competitive Advantages**
 
 ### **🎯 Unique Value Propositions**
@@ -137,9 +79,6 @@ Scalable platform for large-scale implementations:
 
 **Hybrid Platform Architecture** 
 - True cross-platform experience with identical functionality on web and mobile, eliminating the need for separate app development
-
-**Flexible Monetization**
-- Multiple revenue streams through free, premium, and enterprise tiers, maximizing user acquisition and retention
 
 **Complete Customization**
 - Full white-label capabilities allowing businesses to create branded streaming experiences without building from scratch
@@ -173,7 +112,7 @@ Scalable platform for large-scale implementations:
 ## 🎪 **Live Demo Experience**
 
 ### **🌐 Try NextWave Now**
-**Demo URL**: [NextWave Entertainment Platform](https://your-demo-url.com)
+**Demo URL**: [NextWave Entertainment Platform](https://nextwave-one.vercel.app/)
 
 **Demo Credentials:**
 - **Username**: `admin@dalu@gmail.com`
@@ -183,36 +122,21 @@ Scalable platform for large-scale implementations:
 - **Instant Access**: No installation required, works immediately in your browser
 - **Full Feature Set**: Complete platform functionality including admin features
 - **Real Content**: Actual movie library with streaming capabilities
-- **Mobile Testing**: Responsive design that works perfectly on any device
-- **Admin Panel**: Backend management interface for complete platform control
+- **Mobile Testing**: Responsive design that works perfectly on any device---
 
----
 
-## 📞 **Get Started Today**
-
-### **🎬 For Individual Users**
-Ready to upgrade your entertainment experience? Access thousands of movies and series with intelligent recommendations and offline downloads.
-
-### **💼 For Businesses**  
-Looking for a streaming solution for your business? NextWave offers complete customization and white-label options for any scale.
-
-### **🏭 For Enterprises**
-Need a comprehensive media platform for your organization? Our enterprise solutions provide full control, analytics, and support.
-
----
-
+## 📧 **Nextwave stands among my first real  world projects on my web development journey**
 ## 📧 **Contact & Support**
 
 ### **💬 Get In Touch**
-- **Project Lead**: Dalu-Atu
-- **Business Inquiries**: [business@nextwave.com](mailto:business@nextwave.com)
+- **Developer**: Dalu-Atu
+- **Inquiries**: [danieelatu@gmail.com](ailto:danieelatu@gmail.com)
 - **Technical Support**: [support@nextwave.com](mailto:support@nextwave.com)
 - **Partnership Opportunities**: [partnerships@nextwave.com](mailto:partnerships@nextwave.com)
 
 ### **🌐 Find Us Online**
 - **🔗 Repository**: [GitHub.com/Dalu-Atu/Project-Nextwave](https://github.com/Dalu-Atu/Project-Nextwave)
-- **💼 LinkedIn**: [Connect with Dalu-Atu](https://linkedin.com/in/dalu-atu)
-- **📱 Portfolio**: [View More Projects](https://dalu-atu.dev)
+- **📱 Portfolio**: [View More Projects](https://danieelatu-portfolio.vercel.app/)
 
 ### **📚 Resources**
 - **📖 Documentation**: Comprehensive setup and user guides included
@@ -222,25 +146,13 @@ Need a comprehensive media platform for your organization? Our enterprise soluti
 
 ---
 
-## 🏆 **Success Stories**
-
-*"NextWave transformed our hotel's entertainment system. Guests now have access to thousands of movies without us managing any content. The automated system keeps everything updated, and our customer satisfaction scores have increased by 40%."*  
-**- Hotel Chain Manager**
-
-*"As a small streaming service, NextWave gave us enterprise-level features at a fraction of the cost. We launched our branded platform in weeks, not months."*  
-**- Startup Founder**
-
-*"The offline download feature is perfect for our mobile users. The platform handles everything automatically - we just focus on growing our subscriber base."*  
-**- Content Aggregator**
-
----
 
 <div align="center">
 
 ## 🎬 **Ready to Experience the Future of Streaming?**
 
-[![Try Live Demo](https://img.shields.io/badge/🚀_Try_Live_Demo-Click_Here-brightgreen.svg?style=for-the-badge)](https://your-demo-url.com)
-[![Contact Sales](https://img.shields.io/badge/💼_Contact_Sales-Get_Quote-blue.svg?style=for-the-badge)](mailto:business@nextwave.com)
+[![Try Live Demo](https://img.shields.io/badge/🚀_Try_Live_Demo-Click_Here-brightgreen.svg?style=for-the-badge)](https://nextwave-one.vercel.app/)
+[![Contact Sales](https://img.shields.io/badge/💼_Contact_Sales-Get_Quote-blue.svg?style=for-the-badge)](mailto:danieelatu@gmail.com)
 [![View Documentation](https://img.shields.io/badge/📚_Documentation-Read_More-orange.svg?style=for-the-badge)](#)
 
 ---
@@ -249,5 +161,6 @@ Need a comprehensive media platform for your organization? Our enterprise soluti
 *Revolutionizing streaming through intelligent automation and exceptional user experience*
 
 **Built with ❤️ by [Dalu-Atu](https://github.com/Dalu-Atu)**
+Full Documentaion on cloning will be coming soon
 
 </div>
