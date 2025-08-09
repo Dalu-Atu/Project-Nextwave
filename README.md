@@ -9,7 +9,7 @@
 
 NextWave is a complete movie streaming and downloading platform that revolutionizes how users discover, watch, and enjoy entertainment content. Built with cutting-edge technology and intelligent automation, NextWave delivers a seamless, ad-free streaming experience with an extensive library that updates itself automatically from the latest trends across the internet.
 
-![NextWave Demo](public/nextwave-demo.gif)
+![NextWave Demo](/frontend/public/nextwave-demo.gif)
 
 ---
 
